@@ -2,7 +2,7 @@
 //  MobileChallengeUalaApp.swift
 //  MobileChallengeUala
 //
-//  Created by NaranjaX on 12/06/2025.
+//  Created by Sergio Chocobar on 12/06/2025.
 //
 
 import SwiftUI
