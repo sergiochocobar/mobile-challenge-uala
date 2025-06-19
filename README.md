@@ -42,3 +42,6 @@ La funcionalidad de búsqueda se implementa dentro del `MainViewModel` utilizand
 * **`UserDefaults`**: Las ciudades favoritas se guardan utilizando `UserDefaults` para asegurar que se conserven entre los lanzamientos de la aplicación.
 * **Método `toggleFavorite`**: Este método en `MainViewModel` se encarga de añadir o eliminar ciudades del array `favoriteCities` y luego persiste los cambios.
 
+## Documento PDF con la consigna
+
+[Mobile Challenge - Engineer - v0.8.pdf](https://github.com/user-attachments/files/20823728/Mobile.Challenge.-.Engineer.-.v0.8.pdf)
