@@ -11,7 +11,7 @@ import SwiftUI
 struct MobileChallengeUalaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView.build()
         }
     }
 }
