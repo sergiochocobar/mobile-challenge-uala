@@ -28,12 +28,6 @@ class GetMainScreenUseCase: GetMainScreenUseCaseProtocol {
                 } else {
                     return (nil)
                 }
-//                if let dtos = dtos {
-//                    let modelo = MainModel(dto: dto)
-//                    return (modelo)
-//                } else {
-//                    return (nil)
-//                }
             }
             .eraseToAnyPublisher()
     }

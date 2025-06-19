@@ -39,6 +39,8 @@ class RemoteMainViewRepository: MainViewRepository {
 
 private struct Endpoint {
     static var data = "https://gist.githubusercontent.com/hernan-uala/dce8843a8edbe0b0018b32e137bc2b3a/raw/0996accf70cb0ca0e16f9a99e0ee185fafca7af1/cities.json"
+    
+    //static var data = "https://run.mocky.io/v3/5617c451-eb52-4db8-aa50-d788f3d7e1d9"
 }
 
 
