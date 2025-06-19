@@ -43,14 +43,14 @@ class MainViewModel: ObservableObject {
         guard case .success(let models) = state else {
             return []
         }
-
+        
         let base: [MainModel]
         if searchText.isEmpty {
             base = models
         } else {
             base = models.filter { $0.name.lowercased().hasPrefix(searchText.lowercased()) }
         }
-
+        
         return base.map { model in
             var copy = model
             copy.isFavorite = favoriteCities.contains(where: { $0.id == model.id })
@@ -66,7 +66,7 @@ class MainViewModel: ObservableObject {
             center: CLLocationCoordinate2D(latitude: -34.6037, longitude: -58.3816), // coordenadas por deecto
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         ))
-        print(favoriteCities)
+        loadFavorites()
     }
     
     func loadData() {
@@ -82,13 +82,16 @@ class MainViewModel: ObservableObject {
                 }
             }, receiveValue: { models in
                 if let models = models {
-                    self.state = .success(model: models)
-                    //                    print("Sergio: Success --> " + models[3].name)
+                    let updatedModels = models.map { model -> MainModel in
+                        var copy = model
+                        copy.isFavorite = self.favoriteCities.contains(where: { $0.id == copy.id })
+                        return copy
+                    }
+                    self.state = .success(model: updatedModels)
                 } else {
-                    //                    self.handleLoadDataFailure()
-                    print("Sergio: Failure")
-                    
+                    self.state = .failure(primaryClosure: nil, secondaryClosure: nil)
                 }
+                
             })
             .store(in: &cancellables)
         
@@ -105,30 +108,30 @@ class MainViewModel: ObservableObject {
     
     
     // MARK: - Lógica de Favoritos
-      
-      func toggleFavorite(for city: MainModel) {
-          if let index = favoriteCities.firstIndex(where: { $0.id == city.id }) {
-              favoriteCities.remove(at: index)
-          } else {
-              var cityToAdd = city
-              cityToAdd.isFavorite = true
-              favoriteCities.append(cityToAdd)
-          }
-
-          saveFavorites()
-          print(favoriteCities)
-      }
-      
-      private func saveFavorites() {
-          if let encoded = try? JSONEncoder().encode(favoriteCities) {
-              UserDefaults.standard.set(encoded, forKey: "favoriteCities")
-          }
-      }
-      
-      private func loadFavorites() {
-          if let savedFavoritesData = UserDefaults.standard.data(forKey: "favoriteCities"),
-             let decodedFavorites = try? JSONDecoder().decode([MainModel].self, from: savedFavoritesData) {
-              self.favoriteCities = decodedFavorites
-          }
-      }
+    
+    func toggleFavorite(for city: MainModel) {
+        if let index = favoriteCities.firstIndex(where: { $0.id == city.id }) {
+            favoriteCities.remove(at: index)
+        } else {
+            var cityToAdd = city
+            cityToAdd.isFavorite = true
+            favoriteCities.append(cityToAdd)
+        }
+        
+        saveFavorites()
+        print(favoriteCities)
+    }
+    
+    private func saveFavorites() {
+        if let encoded = try? JSONEncoder().encode(favoriteCities) {
+            UserDefaults.standard.set(encoded, forKey: "favoriteCities")
+        }
+    }
+    
+    private func loadFavorites() {
+        if let savedFavoritesData = UserDefaults.standard.data(forKey: "favoriteCities"),
+           let decodedFavorites = try? JSONDecoder().decode([MainModel].self, from: savedFavoritesData) {
+            self.favoriteCities = decodedFavorites
+        }
+    }
 }

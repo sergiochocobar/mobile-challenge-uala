@@ -192,7 +192,6 @@ public struct MainView: View {
 struct MyView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(viewModel: MainViewModel(useCase: GetMainScreenUseCase(repository: RemoteMainViewRepository())))
-//            .previewInterfaceOrientation(.landscapeRight)
     }
 }
 
@@ -200,7 +199,7 @@ struct MyView_Previews: PreviewProvider {
 // MARK: Sergio - Mover esto a otro lado
 extension MainView {
     public static func build() -> Self {
-        let getUseCase = GetMainScreenUseCase(repository: LocalMainViewRepository())
+        let getUseCase = GetMainScreenUseCase(repository: RemoteMainViewRepository())
         let viewmodel = MainViewModel(useCase: getUseCase)
         let view = MainView(viewModel: viewmodel)
         return view
